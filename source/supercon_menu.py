@@ -19,6 +19,11 @@ def planets(arg):
     vectoros.launch_task('planets')  # launch
     return EXIT
 
+def runhb9fsi(arg):
+    vos_state.show_menu=False     # get the menu of the way
+    vectoros.launch_task('hb9fsi')  # launch
+    return EXIT
+
 def menu_custom(the_menu):
     if the_menu.level==1:
         if machine.Pin(22).value():
@@ -53,7 +58,6 @@ def abcd(key):
         kdict={ keyleds.KEY_A: 'A', keyleds.KEY_B: 'B', keyleds.KEY_C: 'C', keyleds.KEY_D: 'D'}
         await vectoros.launch_vecslot("slot"+kdict[key])
     
-
 # I really didn't want this to be async but it seems like do_menu must have an await
 # and run rarely returns when you have a lot going on
 async def vos_main():
@@ -77,7 +81,12 @@ async def vos_main():
         with Menu(clear_after=True,fg_color=colors.PHOSPHOR_DARK,bg_color=colors.PHOSPHOR_BG,
                   cursor_bg=colors.PHOSPHOR_BG, cursor_fg=colors.PHOSPHOR_BRIGHT) as amenu:  
             ## name in menu, command to run, return value?
-            submenu=[["  Planets", planets, 0],["  Sketch",runsketch,0],["  Back",m_exit,None]]
+            submenu=[["  Planets", planets, 0],
+                     ["  Sketch",runsketch,0],
+                     ["  DrBokko", launch, "drbokko"], 
+                     ["  HB9FSI", runhb9fsi, 0], 
+                     ["  Back",m_exit,None], ]
+            
             mainmenu=[[" Lissajous", run_lissajous,None],
                       [" Demos", SUBMENU, submenu] ,
                       [" Sound", toggle_sound, None],

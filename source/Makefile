@@ -28,8 +28,17 @@ RUNME: vectoros.py
 	sleep 1
 	mpremote run $^
 
+hb9fsi:
+	mpremote cp supercon_menu.py :
+	mpremote cp vos_launch.py :
+	mpremote cp drbokko.py :
+	mpremote cp hb9fsi.py :
+	mpremote cp hb9fsi_qr.jpg :
+	mpremote cp bell202.py :
+	mpremote cp vectorscope_mock.py :
+	mpremote reset
 
-%.png: %.dot
+%.png: %.dot	
 	dot  -T png -o $@ < $^
 	sxiv $@
 

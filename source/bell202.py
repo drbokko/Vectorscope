@@ -107,6 +107,7 @@ async def vos_main():
         if keyleds.KEY_LEVEL in current_keys:
             d.phase_increment[1] = d.phase_increment[1] - 1
             ## increase phase Y
+            
     def handle_joystick_right(key):
         current_keys = keyboardcb.KeyboardCB.current_keys
         if len(current_keys) == 1: ## just joystick

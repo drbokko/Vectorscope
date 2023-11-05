@@ -1,12 +1,19 @@
 # Use this template to start your VectorOS program:
 import screennorm
-
+import machine 
+import gc
 import vectoros
 import asyncio
 import keyleds
 import keyboardcb
 import timer
 from vos_state import vos_state
+from vectorscope_mock import VectorscopeMock
+from dds import DDS
+## Badge-specific classes 
+from codec import Codec
+from waveform import Waveform
+from adc_reader import ADC_Reader
 
 screen=screennorm.ScreenNorm()   # get the screen
 
@@ -35,6 +42,30 @@ def freeze(state=True):
     global _freeze
     _freeze=state
 
+def play_morse(text):
+    # Tone is connected to Y
+    gc.collect()
+
+    v = VectorscopeMock()
+    d = DDS(v)
+    d.increment = [1500, 1200]
+    d.amplitude=[0.5, 0.5]
+    d.recalculate_waveforms()
+
+    for i in range(0,10):
+        machine.Pin(22, machine.Pin.OUT).toggle()
+        asyncio.sleep_ms(100)
+    print(text)
+    pass
+
+def joycb(key):
+    # A for morse code
+    if (key==keyleds.A):
+            oldpause=pauseflag
+            pauseflag=False   # make sure it redraws
+            play_morse("HB9FSI")
+            pauseflag=oldpause
+
 
 async def vos_main():
     global _freeze, _exit, _run_every_ms, task_name, _menu_key
@@ -42,6 +73,7 @@ async def vos_main():
     _exit=False
 # exit on Menu
     _menu_key=keyboardcb.KeyboardCB({keyleds.KEY_MENU: exit})
+
 # if you want to control keyboard and LED without running the whole OS
     if vectoros.vectoros_active()==False:
         keyboardcb.KeyboardCB.run(250)
@@ -50,8 +82,9 @@ async def vos_main():
         if _freeze==False:
 # your code will mostly go here
             screen.jpg("hb9fsi_qr.jpg")
-            
+
         await asyncio.sleep_ms(_run_every_ms)   
+
     _exit=False  # reset for next time
     vectoros.remove_task(task_name)   # make sure we are removed (also does this in exit)
 

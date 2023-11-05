@@ -1,11 +1,15 @@
 # Use this template to start your VectorOS program:
 
+import screennorm
 import vectoros
 import asyncio
 import keyleds
 import keyboardcb
 import timer
 from vos_state import vos_state
+import colors
+
+screen=screennorm.ScreenNorm()   # get the screen
 
 
 
@@ -47,7 +51,7 @@ async def vos_main():
     while _exit==False:
         if _freeze==False:
 # your code will mostly go here            
-            print("Do something here")
+            screen.jpg("pl_moon.jpg")
         await asyncio.sleep_ms(_run_every_ms)   
     _exit=False  # reset for next time
     vectoros.remove_task(task_name)   # make sure we are removed (also does this in exit)

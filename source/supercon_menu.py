@@ -24,6 +24,11 @@ def runhb9fsi(arg):
     vectoros.launch_task('hb9fsi')  # launch
     return EXIT
 
+def rundrbokko(arg):
+    vos_state.show_menu=False     # get the menu of the way
+    vectoros.launch_task('drbokko')  # launch
+    return EXIT
+
 def menu_custom(the_menu):
     if the_menu.level==1:
         if machine.Pin(22).value():
@@ -83,7 +88,7 @@ async def vos_main():
             ## name in menu, command to run, return value?
             submenu=[["  Planets", planets, 0],
                      ["  Sketch",runsketch,0],
-                     ["  DrBokko", launch, "drbokko"], 
+                     ["  DrBokko", rundrbokko, 0], 
                      ["  HB9FSI", runhb9fsi, 0], 
                      ["  Back",m_exit,None], ]
             

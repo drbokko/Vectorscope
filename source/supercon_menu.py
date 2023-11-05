@@ -50,6 +50,14 @@ def run_lissajous(arg):
     # we never come back, vectorscope
     return EXIT
 
+# the a modified vector scope demo
+def run_bell202(arg):
+    vos_state.show_menu=False
+    vos_state.gc_suspend = True
+    vectoros.launch_task('bell202')  
+    # we never come back, vectorscope
+    return EXIT
+
 def reboot(arg):
     if arg==False:
         vectoros.reset()
@@ -90,6 +98,7 @@ async def vos_main():
                      ["  Sketch",runsketch,0],
                      ["  DrBokko", rundrbokko, 0], 
                      ["  HB9FSI", runhb9fsi, 0], 
+                     ["  Bell202", run_bell202, None], 
                      ["  Back",m_exit,None], ]
             
             mainmenu=[[" Lissajous", run_lissajous,None],

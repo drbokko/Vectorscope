@@ -6,6 +6,7 @@ launch_list={ "menu": "supercon_menu",
               "demo": "examples",
               "planets": "planets",
               "hb9fsi": "hb9fsi", 
+              "bell202": "bell202", 
               "drbokko": "drbokko",
               "lissajous": "lissajous"}
 

@@ -58,13 +58,13 @@ def play_morse(text):
     print(text)
     pass
 
-def joycb(key):
+def action_keys(key):
     # A for morse code
     if (key==keyleds.A):
-            oldpause=pauseflag
-            pauseflag=False   # make sure it redraws
-            play_morse("HB9FSI")
-            pauseflag=oldpause
+        oldpause=pauseflag
+        pauseflag=False   # make sure it redraws
+        play_morse("HB9FSI")
+        pauseflag=oldpause
 
 
 async def vos_main():
@@ -72,7 +72,8 @@ async def vos_main():
     _freeze=False
     _exit=False
 # exit on Menu
-    _menu_key=keyboardcb.KeyboardCB({keyleds.KEY_MENU: exit})
+    _menu_key=keyboardcb.KeyboardCB({keyleds.KEY_MENU: exit, 
+                                     keyleds.KEY_A: action_keys})
 
 # if you want to control keyboard and LED without running the whole OS
     if vectoros.vectoros_active()==False:
